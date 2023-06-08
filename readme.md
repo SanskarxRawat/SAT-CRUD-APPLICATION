@@ -19,3 +19,5 @@ SAT CRUD APPLICATION
      jpa.hibernate.ddl-auto=update
      jpa.hibernate.show-sql=true
      jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQL8Dialect
+
+Run the Application on http://localhost:8080 (or your custom specified port)
