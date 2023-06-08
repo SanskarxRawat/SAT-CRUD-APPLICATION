@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Menu</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://getbootstrap.com/docs/5.2/assets/css/docs.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+
+<style>
+        html, body {
+            height: 100%;
+        }
+
+        .container {
+            margin-top:80px;
+        }
+        .rank {
+            margin-left:500px;
+        }
+        .json-data {
+           white-space: pre-wrap;
+       }
+</style>
+<body>
+<div class="container">
+    <select id="menuSelect" class="form-select" aria-label="Default select example">
+        <option selected>Open this select menu</option>
+        <option value="Insert Data">Insert Data</option>
+        <option value="View All Data">View All Data</option>
+        <option value="Get Rank">Get Rank</option>
+        <option value="Update Score">Update Score</option>
+        <option value="Delete One Record">Delete One Record</option>
+    </select>
+</div>
+
+<br/>
+<br/>
+<label class="rank">Rank will be displayed here : <span th:text="${rank}"></span></label>
+<br/>
+<br/>
+<label class="rank">Data will be displayed below</label>
+<pre class="json-data" th:utext="${jsonData}"></pre>
+<div class="modal fade" id="insert" tabindex="-1" aria-labelledby="modal1Label" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modal1Label">Insert SAT Score</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form th:action="@{/insert}" th:object="${sat}" method="POST">
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input type="text" th:field="*{name}" class="form-control" placeholder="Name" required>
+                        <label>Address</label>
+                        <input type="text" th:field="*{address}" class="form-control" placeholder="Address" required>
+                        <label>City</label>
+                        <input type="text" th:field="*{city}" class="form-control" placeholder="City" required>
+                        <label>Country</label>
+                        <input type="text" th:field="*{country}" class="form-control" placeholder="Country" required>
+                        <label>PinCode</label>
+                        <input type="text"  th:field="*{pinCode}" class="form-control" placeholder="PinCode" required>
+                        <label>Sat Score</label>
+                        <input type="number" th:field="*{satScore}" class="form-control" placeholder="Sat Score" required>
+                    </div>
+                    <br/>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="update" tabindex="-1" aria-labelledby="modal2Label" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Update Score</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form th:action="@{/update}"  method="POST">
+                <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" name="name" class="form-control" placeholder="Name">
+                    <label>Updated Score</label>
+                    <input type="number" name="score" class="form-control" placeholder="Updated Score">
+                </div>
+                <br/>
+                <button type="submit" class="btn btn-primary">Update</button>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="delete" tabindex="-1" aria-labelledby="modal2Label" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Delete Score</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form th:action="@{/delete}" method="POST">
+                <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" name="name" class="form-control" placeholder="Name">
+                </div>
+                <br/>
+                <button type="submit" class="btn btn-primary">Delete</button>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="rank" tabindex="-1" aria-labelledby="modal2Label" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Rank</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form th:action="@{/rank}" method="POST">
+                <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" name="name" class="form-control" placeholder="Name">
+                </div>
+                <br/>
+                <button type="submit" class="btn btn-primary">Find Rank</button>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="view" tabindex="-1" aria-labelledby="modal2Label" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">View Data</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form th:action="@{/view}" method="GET">
+                    <button type="submit" class="btn btn-primary">Show Data</button>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+        document.getElementById('menuSelect').addEventListener('change', function() {
+            var selectedOption = this.value;
+            if (selectedOption === 'Insert Data') {
+                $('#insert').modal('show');
+            } else if (selectedOption === 'Update Score') {
+                $('#update').modal('show');
+            } else if (selectedOption === 'Delete One Record') {
+                $('#delete').modal('show');
+             } else if (selectedOption === 'Get Rank') {
+                $('#rank').modal('show');
+            }else if (selectedOption === 'View All Data') {
+                $('#view').modal('show');
+            }
+        });
+</script>
+
+</body>
+
+</html>
