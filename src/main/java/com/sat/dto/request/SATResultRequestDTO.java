@@ -6,6 +6,7 @@ import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 
 @Data
 public class SATResultRequestDTO {
@@ -26,6 +27,7 @@ public class SATResultRequestDTO {
     private String pinCode;
 
     @NotNull(message = SATExceptionConstants.EMPTY_FIELD)
+    @Positive(message = SATExceptionConstants.NEGATIVE_SCORE)
     private Integer satScore;
 
     private Boolean passed;
