@@ -4,6 +4,7 @@ package com.sat.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sat.constants.SATConstants;
+import com.sat.dto.request.SATResultRequestDTO;
 import com.sat.entity.SATResult;
 import com.sat.service.SATService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -36,9 +37,9 @@ public class SATController {
 
     @PostMapping("/insert")
     @Operation(description = "This api is used to insert SAT Score.")
-    public String insertSATScore(@ModelAttribute("sat") @Valid SATResult satResult) {
-        log.info("SAT Score : {}",satResult);
-        satService.insertData(satResult);
+    public String insertSATScore(@ModelAttribute("sat") @Valid SATResultRequestDTO satResultRequestDTO) {
+        log.info("SAT Score : {}",satResultRequestDTO);
+        satService.insertData(satResultRequestDTO);
         return SATConstants.HOME;
     }
 

@@ -1,8 +1,10 @@
 package com.sat.service.impl;
 
+import com.sat.dto.request.SATResultRequestDTO;
 import com.sat.entity.SATResult;
 import com.sat.repository.SATRepository;
 import com.sat.service.SATService;
+import com.sat.util.SATUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,7 +21,8 @@ public class SATServiceImpl implements SATService {
     private SATRepository satRepository;
 
     @Override
-    public SATResult insertData(SATResult satResult) {
+    public SATResult insertData(SATResultRequestDTO satResultRequestDTO) {
+        SATResult satResult= SATUtil.convertToEntity(satResultRequestDTO);
         return satRepository.save(satResult);
     }
 
@@ -46,6 +49,7 @@ public class SATServiceImpl implements SATService {
     public void updateScore(String name, Integer score) {
         SATResult satResult=satRepository.findByName(name);
         satResult.setSatScore(score);
+        satResult.setPassed(SATUtil.calculatePassed(score));
         satRepository.save(satResult);
     }
 

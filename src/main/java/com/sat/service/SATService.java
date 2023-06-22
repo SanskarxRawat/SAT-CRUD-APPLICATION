@@ -1,12 +1,13 @@
 package com.sat.service;
 
+import com.sat.dto.request.SATResultRequestDTO;
 import com.sat.entity.SATResult;
 
 import java.util.List;
 
 public interface SATService {
 
-    SATResult insertData(SATResult satResult);
+    SATResult insertData(SATResultRequestDTO satResult);
 
     List<SATResult> viewAllData();
 
